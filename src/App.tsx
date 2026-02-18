@@ -10,6 +10,7 @@ import CustomCursor from "./components/CustomCursor";
 import IntroAnimation from "./components/IntroAnimation";
 import { useState } from "react";
 import Footer from "./sections/Footer";
+import MusicPlayer from "./components/MusicPlayer";
 
 export default function App() {
   const [introDone, setIntroDone] = useState<boolean>(false);
@@ -29,8 +30,9 @@ export default function App() {
           <Testimonials />
           <Contact />
           <Footer />
+          <MusicPlayer />
         </div>
       )}
-    </>
+      </>
   );
 }
