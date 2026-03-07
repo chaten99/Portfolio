@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, useMemo } from "react";
-import photo1 from "../assets/photo1.jpg";
+import photo1 from "../assets/photo1.png";
 import photo2 from "../assets/photo2.png";
 import photo3 from "../assets/photo3.png";
-import img1 from "../assets/img1.jpg";
-import img2 from "../assets/img2.jpg";
-import img3 from "../assets/img3.jpg";
+import img1 from "../assets/img1.png";
+import img2 from "../assets/img2.png";
+import img3 from "../assets/img3.png";
 import {
   motion,
   AnimatePresence,
@@ -36,20 +36,20 @@ export default function Projects() {
     () => [
       {
         title: "Quick Chat",
-        link: "#",
-        bgColor: "#0d4d3d",
+        link: "https://chat-app-chaten.netlify.app/",
+        bgColor: "#031d16",
         image: isMobile ? photo1 : img1,
       },
       {
-        title: "Project 2",
-        link: "#",
+        title: "Full Stack Todo App",
+        link: "https://chaten-todo.netlify.app/",
         bgColor: "#3884d3",
         image: isMobile ? photo2 : img2,
       },
       {
-        title: "Project 3",
-        link: "#",
-        bgColor: "#dc9317",
+        title: "Shop Verse",
+        link: "https://shop-verse-chaten.netlify.app/",
+        bgColor: "#59acff",
         image: isMobile ? photo3 : img3,
       },
     ],
