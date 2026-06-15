@@ -1,10 +1,12 @@
 import Navbar from "./components/Navbar";
 import About from "./sections/About";
 import Contact from "./sections/Contact";
+import Education from "./sections/Education";
 import Experience from "./sections/Experience";
 import Home from "./sections/Home";
 import Projects from "./sections/Projects";
 import Skills from "./sections/Skills";
+import Achievements from "./sections/Achievements";
 import Testimonials from "./sections/Testimonials";
 import CustomCursor from "./components/CustomCursor";
 import IntroAnimation from "./components/IntroAnimation";
@@ -27,6 +29,8 @@ export default function App() {
           <Skills />
           <Projects />
           <Experience />
+          <Education />
+          <Achievements />
           <Testimonials />
           <Contact />
           <Footer />

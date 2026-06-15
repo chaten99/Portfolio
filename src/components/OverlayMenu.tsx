@@ -23,7 +23,7 @@ export default function OverlayMenu({ isOpen, onClose }: { isOpen: boolean; onCl
                     </button>
 
                     <ul className="space-y-6 text-center">
-                        {["Home", "About", "Skills", "Projects", "Experience", "Testimonials", "Contact"].map((item: string, index: number) =>(
+                        {["Home", "About", "Skills", "Projects", "Experience", "Education", "Achievements", "Testimonials", "Contact"].map((item: string, index: number) =>(
                             <motion.li key={index}
                             initial={{opacity: 0, y: 20}}
                             animate={{opacity: 1, y:0}}

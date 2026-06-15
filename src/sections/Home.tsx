@@ -113,7 +113,7 @@ export default function Home() {
             >
               I turn complex ideas into seamless, high-impact web experiences -
               building modern, scalable, and lightning-fast applications that
-              that leave a lasting impression.
+              leave a lasting impression.
             </motion.p>
             <motion.div
               className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-6"

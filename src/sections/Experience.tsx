@@ -1,246 +1,153 @@
-import {
-  motion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
-type Experience = {
+type ExperienceItem = {
   role: string;
   company: string;
   duration: string;
   description: string;
+  highlights: string[];
 };
 
-type LayoutType = "desktop" | "mobile";
-
-type ExperienceItemProps = {
-  exp: Experience;
-  idx: number;
-  start: number;
-  end: number;
-  scrollYProgress: MotionValue<number>;
-  layout: LayoutType;
-};
-
-const experiences: Experience[] = [
+const experiences: ExperienceItem[] = [
   {
-    role: "BCA Student (2nd Year)",
-    company: "CodeQuotient School of Technology",
-    duration: "2024 – Present",
-    description:
-      "Pursuing BCA with specialization in AI. Focused on full-stack development, DSA, and real-time applications.",
-  },
-  {
-    role: "Web Development Trainee",
+    role: "Software Development Intern",
     company: "CodeQuotient",
-    duration: "2025",
+    duration: "Feb 2026 – Present",
     description:
-      "Completed industrial training covering HTML, CSS, JavaScript, React, Node.js, MongoDB, and real-world projects.",
+      "Working on both frontend and backend architecture design, implementation, and optimization for projects.",
+    highlights: [
+      "Designed and implemented RESTful API endpoints using Node.js and Express.js, following MVC architecture and REST design principles",
+      "Optimized PostgreSQL database schemas with indexing and normalization, reducing self-tested query times in personal backend projects",
+      "Developed both frontend components and backend services for a full-stack project, applying best practices in React and Node.js across the stack",
+    ],
   },
   {
-    role: "Senior Secondary (Science)",
-    company: "DAV Centenary Public School",
-    duration: "2023",
+    role: "Intern",
+    company: "CodeQuotient",
+    duration: "Aug 2025 – Oct 2025",
     description:
-      "Completed 12th with Science stream, building strong analytical and problem-solving foundations.",
+      "Focused on building robust server-side APIs, database design, and authentication systems.",
+    highlights: [
+      "Built RESTful API endpoints independently using Node.js and Express.js, following MVC architecture and REST design principles",
+      "Designed and optimized PostgreSQL schemas with indexing and normalization, reducing self-tested query times in personal backend projects",
+      "Developed a layered authentication system covering JWT, role-based authorization, and request validation middleware — applied across personal full-stack projects",
+    ],
+  },
+  {
+    role: "Summer Trainee",
+    company: "CodeQuotient",
+    duration: "Jul 2025 – Aug 2025",
+    description:
+      "Completed an intensive training program covering core JavaScript and foundational problem-solving skills.",
+    highlights: [
+      "Completed JavaScript projects independently — including a To-Do App, Stopwatch, and API Compiler — building proficiency in DOM manipulation and async programming",
+      "Practiced DSA fundamentals daily, solving problems covering arrays, strings, and recursion to strengthen core problem-solving ability",
+    ],
   },
 ];
 
-function ExperienceItem({
-  exp,
-  idx,
-  start,
-  end,
-  scrollYProgress,
-  layout,
-}: ExperienceItemProps) {
-  const progress = useTransform(
-    scrollYProgress,
-    [start, end],
-    [0, 1],
-    { clamp: true }
-  );
-
-  const scale = useTransform(progress, [0, 0.25, 1], [0.75, 1, 1]);
-  const opacity = useTransform(progress, [0, 0.2, 1], [0, 1, 1]);
-
-  const y = useTransform(
-    progress,
-    [0, 1],
-    [idx % 2 === 0 ? 60 : -60, 0]
-  );
-
-  const x = useTransform(progress, [0, 1], [-50, 0]);
-
-  if (layout === "desktop") {
-    return (
-      <div className="relative flex flex-1 justify-center items-center min-w-0">
-        <motion.div
-          className="relative z-10 w-7 h-7 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 shadow-lg shadow-cyan-400/40"
-          style={{ scale, opacity }}
-        >
-          <motion.div
-            className="absolute inset-0 rounded-full bg-white/40 blur-md"
-            style={{ opacity }}
-          />
-        </motion.div>
-
-        <motion.div
-          className={`absolute ${
-            idx % 2 === 0 ? "-top-10" : "-bottom-10"
-          } w-[3px] bg-gradient-to-b from-white/60 to-transparent`}
-          style={{ height: 48, opacity }}
-        />
-
-        <motion.article
-          className={`absolute ${
-            idx % 2 === 0 ? "bottom-14" : "top-14"
-          } w-[320px] max-w-[90vw] rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-7 shadow-xl shadow-black/40 transition-all duration-300 hover:bg-white/10 hover:border-white/20`}
-          style={{ opacity, y }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.12 }}
-        >
-          <h3 className="text-xl font-semibold text-white">
-            {exp.role}
-          </h3>
-
-          <p className="text-sm text-white/60 mt-1 mb-3 break-words">
-            {exp.company} • {exp.duration}
-          </p>
-
-          <p className="text-sm text-white/75 leading-relaxed break-words">
-            {exp.description}
-          </p>
-        </motion.article>
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative flex items-start">
-      <motion.div
-        className="absolute -left-[14px] top-3 z-10 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 shadow-lg shadow-cyan-400/40"
-        style={{ scale, opacity }}
-      >
-        <motion.div
-          className="absolute inset-0 rounded-full bg-white/40 blur-md"
-          style={{ opacity }}
-        />
-      </motion.div>
-
-      <motion.article
-        className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 w-[90vw] max-w-sm ml-8 shadow-xl shadow-black/40"
-        style={{ opacity, x }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.12 }}
-      >
-        <h3 className="text-lg font-semibold text-white break-words">
-          {exp.role}
-        </h3>
-
-        <p className="text-sm text-white/60 mb-2 break-words">
-          {exp.company} • {exp.duration}
-        </p>
-
-        <p className="text-sm text-white/75 leading-relaxed break-words">
-          {exp.description}
-        </p>
-      </motion.article>
-    </div>
-  );
-}
-
 export default function Experience() {
-  const sceneRef = useRef<HTMLDivElement | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkMobile = (): void =>
-      setIsMobile(window.innerWidth < 768);
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const SCENE_HEIGHT_VH = isMobile
-    ? 160 * experiences.length
-    : 120 * experiences.length;
-
-  const { scrollYProgress } = useScroll({
-    target: sceneRef,
-    offset: ["start start", "end end"],
-  });
-
-  const thresholds = useMemo(
-    () => experiences.map((_, i) => (i + 1) / experiences.length),
-    []
-  );
-
-  const lineSize = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
   return (
-    <section id="experience" className="relative bg-black text-white">
-      <div
-        ref={sceneRef}
-        style={{ height: `${SCENE_HEIGHT_VH}vh`, minHeight: "120vh" }}
-        className="relative"
-      >
-        <div className="sticky top-0 h-screen flex flex-col">
-          <h2 className="text-4xl sm:text-5xl font-bold mt-5 text-center tracking-tight">
+    <section
+      id="experience"
+      className="relative bg-black text-white overflow-hidden py-20 md:py-28"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/4 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-r from-[#302b63] via-[#00bf8f] to-[#1cd8d2] opacity-[0.06] blur-[150px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] rounded-full bg-gradient-to-r from-[#1cd8d2] to-[#302b63] opacity-[0.05] blur-[140px] animate-pulse delay-700" />
+      </div>
+
+      <div className="relative z-10 max-w-5xl w-full mx-auto px-6 md:px-10 lg:px-12">
+
+        <motion.div
+          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: -28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.4 }}
+        >
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1cd8d2] mb-3">
+            Career Path
+          </p>
+          <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1cd8d2] via-[#00bf8f] to-[#302b63]">
             Experience
           </h2>
+          <div className="mt-4 mx-auto h-[3px] w-16 rounded-full bg-gradient-to-r from-[#1cd8d2] via-[#00bf8f] to-[#302b63]" />
+        </motion.div>
 
-          <div className="flex flex-1 items-center justify-center px-6 pb-10">
-            {!isMobile && (
-              <div className="relative w-full max-w-7xl">
-                <div className="relative h-[6px] bg-white/15 rounded overflow-hidden">
+        <div className="relative">
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#1cd8d2]/40 via-[#00bf8f]/20 to-transparent md:-translate-x-1/2" />
+
+          <div className="space-y-12 md:space-y-16">
+            {experiences.map((exp, i) => {
+              const isLeft = i % 2 === 0;
+
+              return (
+                <div
+                  key={exp.role + exp.duration}
+                  className="relative flex items-start"
+                >
                   <motion.div
-                    className="absolute left-0 top-0 h-[6px] bg-gradient-to-r from-cyan-400 via-emerald-400 to-transparent rounded origin-left"
-                    style={{ width: lineSize }}
-                  />
-                </div>
+                    className="absolute left-4 md:left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#1cd8d2] to-[#00bf8f] shadow-lg shadow-[#1cd8d2]/30" />
+                    <div className="absolute w-8 h-8 rounded-full bg-[#1cd8d2]/15 animate-ping" />
+                  </motion.div>
 
-                <div className="relative flex justify-between mt-0">
-                  {experiences.map((exp, idx) => (
-                    <ExperienceItem
-                      key={exp.role + idx}
-                      exp={exp}
-                      idx={idx}
-                      start={idx === 0 ? 0 : thresholds[idx - 1]}
-                      end={thresholds[idx]}
-                      scrollYProgress={scrollYProgress}
-                      layout="desktop"
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+                  <motion.article
+                    className={`relative ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${
+                      isLeft
+                        ? "md:mr-auto md:pr-8"
+                        : "md:ml-auto md:pl-8"
+                    }`}
+                    initial={{
+                      opacity: 0,
+                      x: isLeft ? -40 : 40,
+                    }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: i * 0.1,
+                      ease: "easeOut",
+                    }}
+                    viewport={{ once: true, amount: 0.2 }}
+                  >
+                    <div className="rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] p-6 sm:p-7 shadow-xl shadow-black/30 transition-all duration-300 hover:bg-white/[0.07] hover:border-white/[0.15]">
+                      <span className="inline-block rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 text-xs font-medium text-[#1cd8d2] mb-4">
+                        {exp.duration}
+                      </span>
 
-            {isMobile && (
-              <div className="relative w-full max-w-md">
-                <div className="absolute left-0 top-0 bottom-0 w-[6px] bg-white/15 rounded overflow-hidden">
-                  <motion.div
-                    className="absolute top-0 left-0 w-[6px] bg-gradient-to-b from-cyan-400 to-emerald-400 rounded origin-top"
-                    style={{ height: lineSize }}
-                  />
-                </div>
+                      <h3 className="text-xl font-bold text-white mb-1">
+                        {exp.role}
+                      </h3>
+                      <p className="text-sm font-medium text-white/60 mb-3">
+                        {exp.company}
+                      </p>
 
-                <div className="relative flex flex-col gap-12 ml-10 mt-6 pb-28">
-                  {experiences.map((exp, idx) => (
-                    <ExperienceItem
-                      key={exp.role + idx}
-                      exp={exp}
-                      idx={idx}
-                      start={idx === 0 ? 0 : thresholds[idx - 1]}
-                      end={thresholds[idx]}
-                      scrollYProgress={scrollYProgress}
-                      layout="mobile"
-                    />
-                  ))}
+                      <p className="text-sm text-white/70 leading-relaxed mb-4">
+                        {exp.description}
+                      </p>
+
+                      <ul className="space-y-2.5">
+                        {exp.highlights.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 text-sm text-white/60"
+                          >
+                            <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#1cd8d2] to-[#00bf8f] shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.article>
                 </div>
-              </div>
-            )}
+              );
+            })}
           </div>
         </div>
       </div>
