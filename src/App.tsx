@@ -13,9 +13,12 @@ import IntroAnimation from "./components/IntroAnimation";
 import { useState } from "react";
 import Footer from "./sections/Footer";
 import MusicPlayer from "./components/MusicPlayer";
+import VisitorCounter from "./components/VisitorCounter";
+import useVisitorTracking from "./hooks/useVisitorTracking";
 
 export default function App() {
   const [introDone, setIntroDone] = useState<boolean>(false);
+  const { visitorCount, loading } = useVisitorTracking();
 
   return (
     <>
@@ -35,6 +38,7 @@ export default function App() {
           <Contact />
           <Footer />
           <MusicPlayer />
+          <VisitorCounter count={visitorCount} loading={loading} />
         </div>
       )}
       </>

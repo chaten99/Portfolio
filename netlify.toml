@@ -1,0 +1,15 @@
+# ──────────────────────────────────────────────────
+# Netlify Build & Functions Configuration
+# ──────────────────────────────────────────────────
+
+[build]
+  # Vite build command
+  command = "npm run build"
+  # Vite outputs to dist/
+  publish = "dist"
+  # Netlify Functions directory
+  functions = "netlify/functions"
+
+[functions]
+  # Use esbuild for faster function bundling
+  node_bundler = "esbuild"
